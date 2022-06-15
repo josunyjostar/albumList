@@ -32,6 +32,11 @@ const useAjaxStore = create(
       temp[id - 1].title = content;
       set(state => ({albums: [...temp]}));
     },
+    deleteAlbum(id) {
+      let temp = Array.from(get().albums);
+      temp = temp.filter(v => v.id !== id);
+      set(state => ({albums: [...temp]}));
+    },
   })),
 );
 

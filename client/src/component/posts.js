@@ -96,7 +96,7 @@ function Posts() {
   const [postId, setPostId] = useState(-1);
   const offset = (page - 1) * POSTS_CNT;
 
-  const {albums, getAlbums, updateAlbum} = useAjaxStore();
+  const {albums, getAlbums, updateAlbum, deleteAlbum} = useAjaxStore();
 
   useEffect(() => {
     getAlbums();
@@ -109,6 +109,10 @@ function Posts() {
   function updatePost(id) {
     updateAlbum(id, inputRef.current.value);
     setPostId(-1);
+  }
+
+  function deletePost(id) {
+    deleteAlbum(id);
   }
 
   return (
@@ -149,7 +153,12 @@ function Posts() {
                   update
                 </button>
               </div>
-              <div className="delete">
+              <div
+                className="delete"
+                onClick={() => {
+                  deletePost(id);
+                }}
+              >
                 <button>delete</button>
               </div>
             </PostBtn>
