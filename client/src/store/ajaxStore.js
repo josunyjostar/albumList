@@ -3,15 +3,13 @@ import {devtools} from 'zustand/middleware';
 import axios from 'axios';
 
 const useAjaxStore = create(
-  devtools(set => ({
+  devtools((set, get) => ({
     albums: [],
 
     async getAlbums() {
       try {
         const resData = await axios.get(process.env.REACT_APP_API_URL + `/albums`);
         const arr = [];
-
-        console.log('ajax 요청횟수');
 
         for (let i = 0; i < resData.data.length; ++i) {
           const {id, userId, title} = resData.data[i];
@@ -27,6 +25,12 @@ const useAjaxStore = create(
         console.log('getAlbums:::', err);
         set(state => ({albums: []}));
       }
+    },
+
+    updateAlbum(id, content) {
+      const temp = Array.from(get().albums);
+      temp[id - 1].title = content;
+      set(state => ({albums: [...temp]}));
     },
   })),
 );
