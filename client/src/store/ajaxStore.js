@@ -29,7 +29,11 @@ const useAjaxStore = create(
 
     updateAlbum(id, content) {
       const temp = Array.from(get().albums);
-      temp[id - 1].title = content;
+      temp.map((v, i) => {
+        if (v.id === id) {
+          return (v.title = content);
+        } else return v;
+      });
       set(state => ({albums: [...temp]}));
     },
     deleteAlbum(id) {
