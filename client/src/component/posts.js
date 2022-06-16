@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
-import Pagination from './Pagination';
 import useAjaxStore from '../store/ajaxStore';
+import Pagination from './Pagination';
 
 const Layout = styled.div`
   display: flex;
@@ -29,6 +29,12 @@ const Layout = styled.div`
 
   .create {
     margin: 10px 0 0 0;
+
+    .input {
+      font-size: ${props => props.theme.btnFontSize};
+      padding-left: 10px;
+      margin-right: 10px;
+    }
   }
 `;
 
@@ -96,7 +102,7 @@ function Posts() {
   const [postId, setPostId] = useState(-1);
   const offset = (page - 1) * POSTS_CNT;
 
-  const {albums, getAlbums, updateAlbum, deleteAlbum} = useAjaxStore();
+  const {albums, getAlbums, updateAlbum, deleteAlbum, createAlbum} = useAjaxStore();
 
   useEffect(() => {
     getAlbums();
@@ -113,6 +119,14 @@ function Posts() {
 
   function deletePost(id) {
     deleteAlbum(id);
+  }
+
+  function createPost(e) {
+    e.preventDefault();
+    let {userId, title} = e.target;
+    createAlbum(userId.value, title.value);
+    e.target.userId.value = '';
+    e.target.title.value = '';
   }
 
   return (
@@ -164,9 +178,11 @@ function Posts() {
             </PostBtn>
           </AticleLayout>
         ))}
-        <div className="create">
-          <button>create</button>
-        </div>
+        <form className="create" onSubmit={createPost}>
+          <input className="input" placeholder="userId" name="userId" />
+          <input className="input" placeholder="title" name="title" />
+          <button type="submit">create</button>
+        </form>
       </main>
       <footer>
         <Pagination total={albums.length} page={page} setPage={setPage} />

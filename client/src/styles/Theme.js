@@ -4,7 +4,7 @@ const theme = {
   subColor: 'Gainsboro',
   //font
   fontSize: '1.2rem',
-  btnFontSize: '0.9rem',
+  btnFontSize: '1rem',
   //style
   borderRadius: '5px',
 };

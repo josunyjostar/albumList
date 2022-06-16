@@ -1,5 +1,5 @@
 # React for Beginners
 
-AlbumList
+Freed AlbumList
 
 Learning React From Zero to Ninja
