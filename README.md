@@ -1,11 +1,15 @@
 # React for Beginners
 
-Freed AlbumList
+AlbumList
 
-[Description]
+### Description
+<pre>
 CRUD와 검색이 가능한 간단한 게시판입니다.
+</pre>
 
-[Usage]
-cd .\client\
-npm i
-npm start
+### Usage
+<pre>
+cd .\client\       
+npm i      
+npm start 
+</pre>
