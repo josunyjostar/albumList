@@ -14,7 +14,11 @@ const Layout = styled.div`
   height: 100%;
   margin: 0 auto;
 
-  border: 1px purple solid;
+  /* border: 1px purple solid; */
+
+  .header {
+    margin: 2rem 0;
+  }
 
   button {
     border: none;
@@ -31,6 +35,14 @@ const Layout = styled.div`
 
   .create {
     margin: 10px 0 0 0;
+    > button {
+      background-color: ${props => props.theme.btnBGColor};
+    }
+
+    > button:hover {
+      background-color: tomato;
+      color: white;
+    }
 
     .input {
       font-size: ${props => props.theme.btnFontSize};
@@ -162,7 +174,7 @@ function Posts() {
   return (
     <Layout>
       <SearchBar top={-420} left={81} width={30} fn={search} />
-      <header>
+      <header className="header">
         <h1>Freed Album List</h1>
       </header>
       <main>
@@ -216,7 +228,7 @@ function Posts() {
         </form>
       </main>
       <footer>
-        <Pagination total={albums.length} page={page} setPage={setPage} />
+        <Pagination total={albums.length} page={page} setPage={setPage} postPerPage={POSTS_CNT} />
       </footer>
     </Layout>
   );

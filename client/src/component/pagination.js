@@ -9,13 +9,13 @@ const Nav = styled.nav`
 `;
 
 const Button = styled.button`
+  width: 25px;
+  margin: 0;
+  padding: 5px;
   border: none;
   border-radius: ${props => props.theme.borderRadius};
-  padding: 8px;
-  margin: 0;
   background: black;
   color: white;
-  font-size: ${props => props.theme.fontSize};
 
   &:hover {
     background: tomato;
@@ -37,8 +37,8 @@ const Button = styled.button`
   }
 `;
 
-function Pagination({total, page, setPage}) {
-  const numPages = Math.ceil(total / 5);
+function Pagination({total, page, setPage, postPerPage}) {
+  const numPages = Math.ceil(total / postPerPage);
   return (
     <div>
       <Nav>
