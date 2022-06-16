@@ -2,6 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import useAjaxStore from '../store/ajaxStore';
 import Pagination from './Pagination';
+import SearchBar from './SearchBar';
 
 const Layout = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ const Layout = styled.div`
     border-radius: ${props => props.theme.borderRadius};
     font-size: ${props => props.theme.btnFontSize};
     padding: 4px;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   button:hover {
@@ -47,7 +49,7 @@ const AticleLayout = styled.article`
   margin: 0 0;
   padding: 0 0;
 
-  border: 1px red solid;
+  /* border: 1px red solid; */
 `;
 
 const PostBtn = styled.div`
@@ -56,7 +58,11 @@ const PostBtn = styled.div`
 
   width: 100%;
   padding: 10px 0px 10px 0px;
-  border: 1px blue solid;
+  /* border: 1px blue solid; */
+
+  button {
+    background-color: ${props => props.theme.btnBGColor};
+  }
 
   .update {
     margin-left: 5px;
@@ -102,7 +108,7 @@ function Posts() {
   const [postId, setPostId] = useState(-1);
   const offset = (page - 1) * POSTS_CNT;
 
-  const {albums, getAlbums, updateAlbum, deleteAlbum, createAlbum} = useAjaxStore();
+  const {albums, getAlbums, updateAlbum, deleteAlbum, createAlbum, filteredAlbum} = useAjaxStore();
 
   useEffect(() => {
     getAlbums();
@@ -123,16 +129,41 @@ function Posts() {
 
   function createPost(e) {
     e.preventDefault();
-    let {userId, title} = e.target;
+    const {userId, title} = e.target;
     createAlbum(userId.value, title.value);
     e.target.userId.value = '';
     e.target.title.value = '';
   }
 
+  function search(word) {
+    if (word === '') {
+      getAlbums();
+      return;
+    }
+
+    word = word.replace(/[\s]/g, '');
+    const regExp = new RegExp(word);
+
+    const filtered = albums.filter((v, i) => {
+      const {userId, title} = v;
+      const str = userId + title;
+      if (regExp.test(str)) return v;
+      else return null;
+    });
+
+    if (filtered.length === 0) {
+      alert('검색된 내용이 없습니다.');
+      return;
+    }
+
+    filteredAlbum(filtered);
+  }
+
   return (
     <Layout>
+      <SearchBar top={-420} left={81} width={30} fn={search} />
       <header>
-        <h1>Album List</h1>
+        <h1>Freed Album List</h1>
       </header>
       <main>
         {albums.slice(offset, offset + POSTS_CNT).map(({id, title}) => (

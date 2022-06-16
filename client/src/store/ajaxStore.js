@@ -55,6 +55,10 @@ const useAjaxStore = create(
       temp.unshift(albums);
       set(state => ({albums: [...temp]}));
     },
+
+    filteredAlbum(filteredPosts) {
+      set(state => ({albums: filteredPosts}));
+    },
   })),
 );
 
