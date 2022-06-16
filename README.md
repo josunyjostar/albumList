@@ -1,5 +1,3 @@
-# React for Beginners
-
 AlbumList
 
 ### Description
